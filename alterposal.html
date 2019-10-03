@@ -1,0 +1,84 @@
+<!doctype html>
+<html charset="utf-8">
+<head>
+<title>Alterposal helper</title>
+<style>
+html {
+	font-size: 18px;
+	background-color: #333;
+	color: #ccc;
+}
+body, input, button{
+	font-size: 1.2rem;
+	font-family: "tahoma","arial", sans-serif;
+	padding: 1rem;
+	margin: 0;
+}
+.buttons button{
+	width: 3rem;
+	margin: 0.5rem;
+}
+button, input{
+	border: solid 1px rgba(0,0,0,0.75);
+	border-radius: 0.5rem;
+	box-shadow: .1em .1em .4em rgba(0,0,0,0.75);
+}
+.hidden{
+	visibility: hidden;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+$(function(){
+	var letters = [];
+	$('.input').on('keyup', function(ev){
+		letters = [...ev.target.value];
+		var buttons = letters.map(letter => {
+			if(letter === ' '){
+				return '<br>';
+			}
+			else{
+				var button = $("<button></button>").text(letter).on("click", function(ev){
+					$('.output').append(letter);
+					$(this).addClass('hidden');
+				});
+				return button;
+			}
+		});
+		$('.buttons').html(buttons);
+		$('.output').text('');
+	});
+	
+	$('.clear').click(function(ev){
+		$('.output').text('');
+		var buttons = letters.map(letter => {
+			if(letter === ' '){
+				return '<br>';
+			}
+			else{
+				var button = $("<button></button>").text(letter).on("click", function(ev){
+					$('.output').append(letter);
+					$(this).addClass('hidden');
+				});
+				return button;
+			}
+		});
+		$('.buttons').html(buttons);
+		//$('.input').val('').focus();
+	});
+	
+	$('.input').val('').focus();
+});
+</script>
+</head>
+<body>
+<h1>Alterposal helper</h1>
+<h2>enter the two four-letter words below, then click on each letter to use it</h2>
+<div>
+	<input type="text" class="input" size="20" /> <button class="clear">Clear</button>
+</div>
+
+<div class="buttons"></div>
+<div class="output"></div>
+</body>
+</html>
